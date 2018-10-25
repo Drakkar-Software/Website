@@ -60,4 +60,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "twitter-bootstrap-rails"
 
 # jquery
+gem "jquery-rails"
 gem "jquery-ui-rails"
