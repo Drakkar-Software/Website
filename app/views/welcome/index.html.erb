@@ -1,4 +1,4 @@
-<section class="hero bg-overlay" id="hero" data-bg="images/octobot.png">
+<section class="hero bg-overlay" id="hero" data-bg="<%= asset_path('octobot.png') %>">
   <div class="text py-5">
     <p class="lead">A powerful fully modular open-source cryptocurrency trading robot</p>
     <h1>I'm <span class="bold">Octobot</span>, based on <span class="bold">Python</span>.</h1>
@@ -165,28 +165,26 @@
   </div>
 </section>
 
-<section class="bg-overlay padding" id="project" data-bg="images/projects.jpeg">
+<section class="bg-overlay padding" id="project" data-bg="<%= asset_path('octobot.png') %>">
   <div class="container">
-    <div class="row align-items-center">
-      <div class="col-12 col-md-6">
-        <figure class="projects-picture">
-          <images src="https://raw.githubusercontent.com/Drakkar-Software/OctoBot/assets/roadmap.png" alt="Roadmap">
-        </figure>
+    <div class="row align-items-start">
+      <div class="col">
+          <%= image_tag "roadmap_open_beta.png" %>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col">
         <div class="projects-details">
           <div class="projects-badge">
             Featured
           </div>
           <h2 class="projects-title">OctoBot - Roadmap</h2>
           <p class="projects-description">
-            ......
+            Open Beta
           </p>
           <div class="projects-cta">
-            <a href="" class="btn btn-primary" target="_blank">
+            <a href="https://github.com/Drakkar-Software/OctoBot" class="btn btn-primary" target="_blank">
               Test Now
             </a>
-            <a href="" class="btn btn-link" target="_blank">
+            <a href="https://github.com/Drakkar-Software/OctoBot/wiki" class="btn btn-link" target="_blank">
               More details
             </a>
           </div>
@@ -238,7 +236,7 @@
         <h3>Let's start your automating trading robot !</h3>
       </div>
       <div class="col-12 col-md-4 cta">
-        <a href="#" class="btn btn-outline-primary">
+        <a href="https://github.com/Drakkar-Software/OctoBot/releases" class="btn btn-outline-primary", target="_blank">
           Download Now
         </a>
       </div>
