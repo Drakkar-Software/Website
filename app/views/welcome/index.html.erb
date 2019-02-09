@@ -67,17 +67,7 @@
     <div class="section-body">
       <div class="row col-spacing">
         <div class="col-12 col-md-6 col-lg-4">
-          <article class="card">
-            <images class="card-images-top" src="/images/news/images01.jpg" alt="Article Image"></images>
-            <div class="card-body">
-              <div class="card-subtitle mb-2 text-muted">by <a href="#">Herklos</a> on September 6, 2018</div>
-              <h4 class="card-title"><a href="#" data-toggle="read" data-id="1">OctoBot in Open Beta !</a></h4>
-              <p class="card-text">OctoBot is now in open beta phase, you can now download this new release.</p>
-              <div class="text-right">
-                <a href="https://github.com/Drakkar-Software/OctoBot/releases/tag/0.2.0-beta" target="_blank">Download open beta release <i class="ion-ios-arrow-right"></i></a>
-              </div>
-            </div>
-          </article>
+          <%= render partial: "article", collection: @articles %>
         </div>
       </div>
     </div>
