@@ -1,8 +1,8 @@
 <article class="card">
     <images class="card-images-top" src="/images/news/images01.jpg" alt="Article Image"></images>
     <div class="card-body">
-        <div class="card-subtitle mb-2 text-muted"><%= article.published_at.strftime("%d %B %Y") %> by <a href="#"><%= article.author %></a></div>
-        <h4 class="card-title"><a href="#" data-toggle="read" data-id="1"><%= article.title %></a></h4>
+        <div class="card-subtitle mb-2 text-muted"><%= article.published_at.strftime("%d %B %Y") %> by <a href=""><%= article.author %></a></div>
+        <h4 class="card-title"><a href="" data-toggle="read" data-id="1"><%= article.title %></a></h4>
         <p class="card-text"><%= article.description %></p>
         <% unless article.link.nil? %>
           <div class="text-right">
