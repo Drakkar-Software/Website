@@ -26,4 +26,12 @@ Article.create!([{
                    published_at: DateTime.strptime('27/01/2019 23:00', '%d/%m/%Y %H:%M'),
                    link_text: 'Download latest release',
                    link: 'https://github.com/Drakkar-Software/OctoBot-Launcher'
+                 },
+                 {
+                     title: 'OctoBot update 0.3.3 !',
+                     author: 'Herklos',
+                     description: 'This version includes improvements on the web interface, the new community page, improved trading strategies and much more !.',
+                     published_at: DateTime.strptime('19/04/2019 20:00', '%d/%m/%Y %H:%M'),
+                     link_text: 'Download latest release',
+                     link: 'https://github.com/Drakkar-Software/OctoBot-Launcher'
                  }])
