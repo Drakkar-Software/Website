@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: drakkar-software.herokuapp.com
+Token: 5af8b43a0f9f5e933da576431c8146df6e4f4889c9329e72e4d42566152626a3
