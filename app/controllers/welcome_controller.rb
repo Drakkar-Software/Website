@@ -5,8 +5,6 @@ class WelcomeController < ApplicationController
     @articles = Article.all.order(published_at: :desc)
 
     @total_active_bots = metrics
-    puts @total_active_bots
-    @month_active_bots = metrics(month = -1)
-    puts @month_active_bots
+    @month_active_bots = metrics(0, -1, 0)
   end
 end
