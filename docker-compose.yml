@@ -18,21 +18,24 @@ services:
       - /my-volumes/docker-rails/postgresql:/var/lib/postgresql/data
 
   web:
-    build:
-      context: .
-      args:
-        - FOLDERS_TO_REMOVE=spec node_modules vendor/assets lib/assets tmp/cache
-        - BUNDLE_WITHOUT=development:test
-        - RAILS_ENV=production
+    image: drakkarsoftware/octobot.online:development
+#    build:
+#      context: .
+#      args:
+#        - FOLDERS_TO_REMOVE=spec node_modules vendor/assets lib/assets tmp/cache
+#        - BUNDLE_WITHOUT=development:test
+#        - RAILS_ENV=production
     environment:
       - APP_ADMIN_EMAIL=mail@my-site.com
       - APP_ADMIN_PASSWORD=supergeheim
       - APP_EMAIL=reply@example.org
       - APP_HOST=docker-rails.example.org
       - CERT_NAME=docker-rails.my-site.com
-      - DB_HOST=db
-      - DB_PASSWORD=my-pg-password
-      - DB_USER=postgres
+      - PRODUCTION_DATABASE=db
+      - DATABASE_PASSWORD=my-pg-password
+      - DATABASE_USERNAME=postgres
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
       - RAILS_ENV=production
       - RAILS_MAX_THREADS=5
       - SECRET_KEY_BASE=my-secret-access-key

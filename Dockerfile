@@ -42,7 +42,6 @@ RUN rm -rf $FOLDERS_TO_REMOVE
 ###############################
 # Stage Final
 FROM ruby:2.6.5-alpine
-LABEL maintainer="mail@georg-ledermann.de"
 
 ARG ADDITIONAL_PACKAGES
 
@@ -52,7 +51,8 @@ RUN apk add --update --no-cache \
     imagemagick \
     $ADDITIONAL_PACKAGES \
     tzdata \
-    file
+    file \
+    nodejs
 
 # Add user
 RUN addgroup -g 1000 -S app \
