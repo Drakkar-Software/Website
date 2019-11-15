@@ -1,0 +1,18 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Cache
+      uses: actions/cache@v1.0.0
+    - name: Download artifact
+      uses: actions/download-artifact@v1.0.0
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag drakkarsoftware.octobot.online:$(date +%s)
