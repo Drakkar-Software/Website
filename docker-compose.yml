@@ -1,15 +1,48 @@
-version: '3'
+version: '3.4'
+
 services:
   db:
-    image: postgres
-    volumes:
-      - ./tmp/db:/var/lib/postgresql/data
-  web:
-    build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    volumes:
-      - .:/app
+    environment:
+      - POSTGRES_PASSWORD=my-pg-password
+    hostname: db.drakkar-software.octobot.online
+    image: postgres:11-alpine
     ports:
-      - "3000:3000"
-    depends_on:
+      - 5432
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - /my-volumes/docker-rails/postgresql:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: .
+      args:
+        - FOLDERS_TO_REMOVE=spec node_modules vendor/assets lib/assets tmp/cache
+        - BUNDLE_WITHOUT=development:test
+        - RAILS_ENV=production
+    environment:
+      - APP_ADMIN_EMAIL=mail@my-site.com
+      - APP_ADMIN_PASSWORD=supergeheim
+      - APP_EMAIL=reply@example.org
+      - APP_HOST=docker-rails.example.org
+      - CERT_NAME=docker-rails.my-site.com
+      - DB_HOST=db
+      - DB_PASSWORD=my-pg-password
+      - DB_USER=postgres
+      - RAILS_ENV=production
+      - RAILS_MAX_THREADS=5
+      - SECRET_KEY_BASE=my-secret-access-key
+    hostname: drakkar-software.octobot.online
+    links:
       - db
+    ports:
+      - 3000
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 3000 || exit 1"]
+      interval: 5m
+      start_period: 1m

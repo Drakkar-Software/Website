@@ -32,3 +32,4 @@
 
 .idea/
 .env.dev
+.env
