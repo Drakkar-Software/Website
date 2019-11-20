@@ -11,10 +11,17 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag drakkarsoftware/octobot.online --build-arg FOLDERS_TO_REMOVE="spec node_modules vendor/assets lib/assets tmp/cache" --build-arg BUNDLE_WITHOUT=development:test --build-arg RAILS_ENV=production
+      run: docker build . --file Dockerfile --tag drakkarsoftware/octobot.online --tag drakkarsoftware/drakkar-software-website --build-arg FOLDERS_TO_REMOVE="spec node_modules vendor/assets lib/assets tmp/cache" --build-arg BUNDLE_WITHOUT=development:test --build-arg RAILS_ENV=production
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
         name: drakkarsoftware/octobot.online
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: drakkarsoftware/drakkar-software-website
+        username: ${{ secrets.DOCKER_T_USERNAME }}
+        password: ${{ secrets.DOCKER_T_PASSWORD }}
+        registry: ${{ secrets.DOCKER_T_REPO }}

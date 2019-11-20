@@ -4,10 +4,12 @@ services:
   db:
     environment:
       - POSTGRES_PASSWORD=my-pg-password
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=0.0.0.0
     hostname: db.drakkar-software.octobot.online
     image: postgres:11-alpine
     ports:
-      - 5432
+      - 5432:5432
     restart: always
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -43,7 +45,7 @@ services:
     links:
       - db
     ports:
-      - 3000
+      - 3000:3000
     restart: always
     healthcheck:
       test: ["CMD-SHELL", "nc -z 127.0.0.1 3000 || exit 1"]
