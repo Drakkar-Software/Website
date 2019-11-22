@@ -8,8 +8,9 @@ ARG RAILS_ENV
 
 ENV BUNDLE_WITHOUT ${BUNDLE_WITHOUT}
 ENV RAILS_ENV ${RAILS_ENV}
-ENV SECRET_KEY_BASE=null
-ENV RAILS_SERVE_STATIC_FILES=true
+ENV SECRET_KEY_BASE null
+ENV RAILS_SERVE_STATIC_FILES true
+ENV RAILS_ROOT /usr/src/app
 
 RUN apk add --update --no-cache \
     build-base \
@@ -19,10 +20,10 @@ RUN apk add --update --no-cache \
     nodejs \
     tzdata
 
-WORKDIR /app
+WORKDIR $RAILS_ROOT
 
 # Install gems
-ADD Gemfile* /app/
+ADD Gemfile* /$RAILS_ROOT/
 RUN bundle config --global frozen 1 \
  && bundle install -j4 --retry 3 \
  # Remove unneeded files (cached *.gem, *.o, *.c)
@@ -31,7 +32,7 @@ RUN bundle config --global frozen 1 \
  && find /usr/local/bundle/gems/ -name "*.o" -delete
 
 # Add the Rails app
-ADD . /app
+ADD . /$RAILS_ROOT
 
 # Precompile assets
 RUN bundle exec rake assets:precompile
@@ -44,6 +45,11 @@ RUN rm -rf $FOLDERS_TO_REMOVE
 FROM ruby:2.6.5-alpine
 
 ARG ADDITIONAL_PACKAGES
+
+# Set Rails env
+ENV RAILS_LOG_TO_STDOUT true
+ENV RAILS_SERVE_STATIC_FILES true
+ENV RAILS_ROOT /usr/src/app
 
 # Add Alpine packages
 RUN apk add --update --no-cache \
@@ -61,19 +67,12 @@ USER app
 
 # Copy app with gems from former build stage
 COPY --from=Builder /usr/local/bundle/ /usr/local/bundle/
-COPY --from=Builder --chown=app:app /app /app
+COPY --from=Builder --chown=app:app /$RAILS_ROOT /$RAILS_ROOT
 
-# Set Rails env
-ENV RAILS_LOG_TO_STDOUT true
-ENV RAILS_SERVE_STATIC_FILES true
-
-WORKDIR /app
+WORKDIR /$RAILS_ROOT
 
 # Expose Puma port
 EXPOSE 3000
-
-# Save timestamp of image building
-RUN date -u > BUILD_TIME
 
 # Start up
 CMD ["docker/startup.sh"]

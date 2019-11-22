@@ -1,0 +1,118 @@
+{
+  "jpsType": "install",
+  "jpsVersion": "0.8",
+  "application": {
+    "name": "Drakkar Software Website",
+    "homepage": "http://drakkar-software.octobot.online",
+    "description": "Drakkar Software Website",
+    "settings": {
+        "fields": [{
+            "name": "repo_username",
+            "default": "drakkarsoftware",
+            "caption": "Registry username",
+            "type": "string",
+            "required": true
+        }, {
+            "name": "repo_password",
+            "inputType": "password",
+            "caption": "Registry password",
+            "type": "string",
+            "required": true
+        }, {
+             "name": "repo_registry",
+             "default": "repo.treescale.com",
+             "inputType": "string",
+             "caption": "Registry url",
+             "type": "string",
+             "required": true
+         }, {
+            "name": "app_image",
+            "default": "drakkarsoftware/drakkar-software-website:development",
+            "inputType": "string",
+            "caption": "App image",
+            "type": "string",
+            "required": true
+        }]
+    },
+    "globals": {
+        "secret_key": "${fn.password}",
+        "database_name": "${fn.uuid}",
+        "database_username": "${fn.uuid}",
+        "database_password": "${fn.password}",
+        "database_port": 5432,
+        "database_host": "db",
+        "domain": "drakkar-software.octobot.online",
+        "rails_root": "/usr/src/app"
+    },
+    "env": {
+      "topology": {
+        "nodes": [
+          {
+            "cloudlets": 1,
+            "nodeGroup": "bl",
+            "docker": {
+                "image": "nginx:1.16.1",
+                 "env": {
+                    "APP_DOMAIN": "${globals.domain}",
+                    "APP_HOST": "app",
+                    "RAILS_ROOT": "${globals.rails_root}",
+                 },
+                "links": "cp:app"
+            }
+          },
+          {
+            "cloudlets": 2,
+            "nodeGroup": "cp",
+            "docker": {
+              "image": "${settings.app_image}",
+              "registry": {
+                  "user": "${settings.repo_username}",
+                  "password": "${settings.repo_password}",
+                  "url": "${settings.repo_registry}"
+              },
+              "env": {
+                  "PRODUCTION_DATABASE": "${globals.database_name}",
+                  "DATABASE_PASSWORD": "${globals.database_password}",
+                  "DATABASE_USERNAME": "${globals.database_username}",
+                  "DATABASE_PORT": "${globals.database_port}",
+                  "DATABASE_HOST": "${globals.database_host}",
+                  "RAILS_ENV": "production",
+                  "RAILS_MAX_THREADS": 5,
+                  "SECRET_KEY_BASE": "${globals.secret_key}"
+              },
+              "links": "sqldb:db"
+            }
+          },
+          {
+            "cloudlets": 4,
+            "nodeGroup": "sqldb",
+            "docker": {
+                "image": "postgres:11.5",
+                "env": {
+                    "POSTGRES_PASSWORD": "${globals.database_password}",
+                    "POSTGRES_USER": "${globals.database_username}",
+                    "POSTGRES_PORT": "${globals.database_port}",
+                    "POSTGRES_HOST": "0.0.0.0"
+                }
+            }
+          }
+        ],
+        "ssl": true,
+        "onInstall": [
+            "build-cluster", {
+                "restartContainers": {
+                    "nodeGroup": "cp"
+                }
+            }
+        ]
+      },
+      "upload": [
+          {
+             "nodeType": "nginx",
+             "sourcePath": "https://raw.githubusercontent.com/Drakkar-Software/Website/development/docker/nginx.conf",
+             "destPath": "/etc/nginx/nginx.conf"
+          }
+      ],
+    }
+  }
+}
