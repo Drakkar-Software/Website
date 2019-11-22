@@ -74,5 +74,7 @@ WORKDIR /$RAILS_ROOT
 # Expose Puma port
 EXPOSE 3000
 
+#VOLUME ["$RAILS_ROOT/public"]
+
 # Start up
 CMD ["docker/startup.sh"]

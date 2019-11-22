@@ -55,7 +55,7 @@
                  "env": {
                     "APP_DOMAIN": "${globals.domain}",
                     "APP_HOST": "app",
-                    "RAILS_ROOT": "${globals.rails_root}",
+                    "RAILS_ROOT": "${globals.rails_root}"
                  },
                 "links": "cp:app"
             }
@@ -108,11 +108,11 @@
       },
       "upload": [
           {
-             "nodeType": "nginx",
+             "nodeGroup": "bl",
              "sourcePath": "https://raw.githubusercontent.com/Drakkar-Software/Website/development/docker/nginx.conf",
              "destPath": "/etc/nginx/nginx.conf"
           }
-      ],
+      ]
     }
   }
 }
