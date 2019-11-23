@@ -2,14 +2,12 @@ version: '3.4'
 
 services:
   web:
-    image: drakkarsoftware/nginx
-    build:
-      context: .
-      dockerfile: docker/nginx/Dockerfile
+    image: drakkarsoftware/rails-nginx
     environment:
       - WEB_DOMAIN=.drakkar-software.octobot.online
       - APP_HOST=app
       - RAILS_ROOT=/usr/src/app
+      - NGINX_LOGS_PATH=/web
     volumes:
       - app-public:/usr/src/app
     ports:

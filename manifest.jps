@@ -32,7 +32,14 @@
             "caption": "App image",
             "type": "string",
             "required": true
-        }]
+        }, {
+             "name": "bl_image",
+             "default": "drakkarsoftware/rails-nginx",
+             "inputType": "string",
+             "caption": "Balancer image",
+             "type": "string",
+             "required": true
+         }]
     },
     "globals": {
         "secret_key": "${fn.password}",
@@ -42,7 +49,8 @@
         "database_port": 5432,
         "database_host": "db",
         "domain": "drakkar-software.octobot.online",
-        "rails_root": "/usr/src/app"
+        "rails_root": "/usr/src/app",
+        "nginx_logs_path": "/web"
     },
     "env": {
       "topology": {
@@ -51,11 +59,11 @@
             "cloudlets": 1,
             "nodeGroup": "bl",
             "docker": {
-                "image": "nginx:1.16.1",
+                "image": "${settings.bl_image}",
                  "env": {
                     "WEB_DOMAIN": "${globals.domain}",
                     "APP_HOST": "app",
-                    "RAILS_ROOT": "${globals.rails_root}"
+                    "NGINX_LOGS_PATH": "${globals.nginx_logs_path}"
                  },
                 "links": "cp:app"
             }
