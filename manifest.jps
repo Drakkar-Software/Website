@@ -53,7 +53,7 @@
             "docker": {
                 "image": "nginx:1.16.1",
                  "env": {
-                    "APP_DOMAIN": "${globals.domain}",
+                    "WEB_DOMAIN": "${globals.domain}",
                     "APP_HOST": "app",
                     "RAILS_ROOT": "${globals.rails_root}"
                  },
@@ -109,7 +109,7 @@
       "upload": [
           {
              "nodeGroup": "bl",
-             "sourcePath": "https://raw.githubusercontent.com/Drakkar-Software/Website/development/docker/nginx.conf",
+             "sourcePath": "https://raw.githubusercontent.com/Drakkar-Software/Website/development/docker/nginx/nginx.conf",
              "destPath": "/etc/nginx/nginx.conf"
           }
       ]
