@@ -34,7 +34,7 @@
             "required": true
         }, {
              "name": "bl_image",
-             "default": "drakkarsoftware/rails-nginx",
+             "default": "nginx",
              "inputType": "string",
              "caption": "Balancer image",
              "type": "string",
@@ -48,9 +48,7 @@
         "database_password": "${fn.password}",
         "database_port": 5432,
         "database_host": "db",
-        "domain": "drakkar-software.octobot.online",
-        "rails_root": "/usr/src/app",
-        "nginx_logs_path": "/var/log/nginx"
+        "rails_root": "/usr/src/app"
     },
     "env": {
       "topology": {
@@ -58,8 +56,8 @@
           {
             "cloudlets": 1,
             "nodeGroup": "bl",
+            "nodeType": "nginx",
             "docker": {
-                "image": "${settings.bl_image}",
                  "env": {
                     "WEB_DOMAIN": "${globals.domain}",
                     "APP_HOST": "app",
@@ -101,7 +99,10 @@
                     "POSTGRES_USER": "${globals.database_username}",
                     "POSTGRES_PORT": "${globals.database_port}",
                     "POSTGRES_HOST": "0.0.0.0"
-                }
+                },
+                "volumes": [
+                    "/var/lib/postgresql/data"
+                ]
             }
           }
         ],
@@ -110,6 +111,7 @@
       "upload": [
           {
              "nodeGroup": "bl",
+             "nodeType": "nginx",
              "sourcePath": "https://raw.githubusercontent.com/Drakkar-Software/Website/development/docker/nginx/nginx.conf",
              "destPath": "/etc/nginx/nginx.conf"
           }
