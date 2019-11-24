@@ -50,7 +50,7 @@
         "database_host": "db",
         "domain": "drakkar-software.octobot.online",
         "rails_root": "/usr/src/app",
-        "nginx_logs_path": "/web"
+        "nginx_logs_path": "/var/log/nginx"
     },
     "env": {
       "topology": {
@@ -105,14 +105,7 @@
             }
           }
         ],
-        "ssl": true,
-        "onInstall": [
-            "build-cluster", {
-                "restartContainers": {
-                    "nodeGroup": "cp"
-                }
-            }
-        ]
+        "ssl": true
       },
       "upload": [
           {
