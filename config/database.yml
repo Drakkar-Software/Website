@@ -19,9 +19,13 @@ test:
   database: <%= ENV['TEST_DATABASE'] %>
   username: <%= ENV['TEST_DATABASE_USERNAME'] %>
   password: <%= ENV['TEST_DATABASE_PASSWORD'] %>
+  host: <%= ENV['TEST_DATABASE_HOST'] %>
+  port: <%= ENV['TEST_DATABASE_PORT'] %>
 
 production:
   <<: *default
   database: <%= ENV['PRODUCTION_DATABASE'] %>
   username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
+  port: <%= ENV['DATABASE_PORT'] %>
